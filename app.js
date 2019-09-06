@@ -56,6 +56,26 @@ app.get("/api/recipes/:id", (req, res) => {
     });
 });
 
+app.put("/api/recipes/:id", (req, res) => {
+  const recipe = new Recipe({
+    _id: req.params.id,
+    title: req.body.title,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+    difficulty: req.body.difficulty,
+    time: req.body.time
+  });
+  Recipe.updateOne({ _id: req.params.id }, recipe)
+    .then(() => {
+      res.status(201).json({ message: "Recipe updated succesffully" });
+    })
+    .catch(error => {
+      res.status(400).json({
+        error
+      });
+    });
+});
+
 app.post("/api/recipes", (req, res) => {
   const recipe = new Recipe({
     title: req.body.title,
