@@ -32,6 +32,18 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+app.get("/api/recipes", (req, res) => {
+  Recipe.find()
+    .then(things => {
+      res.status(200).json(things);
+    })
+    .catch(error => {
+      res.status(400).json({
+        error: error
+      });
+    });
+});
+
 app.post("/api/recipes", (req, res) => {
   const recipe = new Recipe({
     title: req.body.title,
