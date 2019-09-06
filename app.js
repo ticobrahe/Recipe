@@ -30,4 +30,24 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(bodyParser.json());
+
+app.post("/api/recipes", (req, res) => {
+  const recipe = new Recipe({
+    title: req.body.title,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+    difficulty: req.body.difficulty,
+    time: req.body.time
+  });
+  recipe
+    .save()
+    .then(() => {
+      res.status(201).json({ message: "Recipe created" });
+    })
+    .catch(err => {
+      res.status(400).json({ err });
+    });
+});
+
 module.exports = app;
