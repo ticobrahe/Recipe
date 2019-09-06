@@ -76,6 +76,20 @@ app.put("/api/recipes/:id", (req, res) => {
     });
 });
 
+app.delete("/api/recipes/:id", (req, res) => {
+  Recipe.deleteOne({ _id: req.params.id })
+    .then(() => {
+      res.status(200).json({
+        message: "Deleted!"
+      });
+    })
+    .catch(error => {
+      res.status(400).json({
+        error: error
+      });
+    });
+});
+
 app.post("/api/recipes", (req, res) => {
   const recipe = new Recipe({
     title: req.body.title,
