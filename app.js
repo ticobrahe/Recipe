@@ -39,7 +39,19 @@ app.get("/api/recipes", (req, res) => {
     })
     .catch(error => {
       res.status(400).json({
-        error: error
+        error
+      });
+    });
+});
+
+app.get("/api/recipes/:id", (req, res) => {
+  Recipe.findOne({ _id: req.params.id })
+    .then(things => {
+      res.status(200).json(things);
+    })
+    .catch(error => {
+      res.status(400).json({
+        error
       });
     });
 });
